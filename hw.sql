@@ -34,20 +34,22 @@ ON city.country_id = country.country_id
 WHERE country.country = 'Nepal';
 
 -- 5.
-SELECT COUNT(staff_id) FROM rental WHERE staff_id = 1;
-SELECT COUNT(staff_id) FROM rental WHERE staff_id = 2;
-SELECT count(rental_id) FROM rental;
--- Answer: staff_id 1 had the most
+SELECT COUNT(rental_id), staff_id
+FROM rental
+GROUP BY staff_id;
 
 -- 6.
-SELECT DISTINCT rating FROM film;
-SELECT COUNT(film_id) FROM film WHERE rating = 'NC-17'; --209
-SELECT COUNT(film_id) FROM film WHERE rating = 'G'; -- 178
-SELECT COUNT(film_id) FROM film WHERE rating = 'PG-13'; --223
-SELECT COUNT(film_id) FROM film WHERE rating = 'PG'; --194
-SELECT COUNT(film_id) FROM film WHERE rating = 'R'; --196 
-
+SELECT COUNT(film_id), rating FROM film GROUP BY rating;
 
 -- 7.
+SELECT DISTINCT first_name, last_name, customer_id
+FROM customer
+WHERE customer_id IN (
+  SELECT customer_id
+  FROM payment
+  WHERE amount > 6.99
+);
 
 -- 8.
+SELECT count(rental_id) FROM payment WHERE amount <= 0;
+-- 14565
